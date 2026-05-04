@@ -1,0 +1,77 @@
+def get_numbers():
+    nums = []
+    count = 1
+    while True:
+        entry = input(f"Введіть {count}-е число або 'stop' для завершення: ")
+        if entry.lower() == "stop":
+            break
+        try:
+            nums.append(float(entry))
+            count += 1
+        except ValueError:
+            print("Введіть коректне число!")
+    return nums
+
+
+def calculate(choice, nums):
+    if choice == 1:
+        return sum(nums)
+
+    elif choice == 2:
+        result = nums[0]
+        for n in nums[1:]:
+            result -= n
+        return result
+
+    elif choice == 3:
+        result = 1
+        for n in nums:
+            result *= n
+        return result
+
+    elif choice == 4:
+        result = nums[0]
+        for n in nums[1:]:
+            if n == 0:
+                raise ZeroDivisionError
+            result /= n
+        return result
+
+
+def calculator():
+    while True:
+        print("\n=== КАЛЬКУЛЯТОР ===")
+        print("1. Додавання")
+        print("2. Віднімання")
+        print("3. Множення")
+        print("4. Ділення")
+        print("5. Вихід")
+
+        try:
+            choice = int(input("Номер операції: "))
+        except ValueError:
+            print("Введіть число від 1 до 5!")
+            continue
+
+        if choice == 5:
+            print("До побачення!")
+            break
+
+        if choice not in [1, 2, 3, 4]:
+            print("Невірний вибір!")
+            continue
+
+        nums = get_numbers()
+
+        if not nums:
+            print("Ви не ввели числа.")
+            continue
+
+        try:
+            result = calculate(choice, nums)
+            print(f"Результат: {result}")
+        except ZeroDivisionError:
+            print("Помилка: ділення на нуль!")
+
+
+calculator()
